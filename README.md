@@ -1,5 +1,4 @@
-# Usage
-## Read
+## Usage
 ### Read mouse events
 ```
 ./ievctl /dev/input/event0
@@ -33,7 +32,6 @@
 {1293930416 35053}, EV_SYN(0x0000), SYN_REPORT(0x0000), 0
 ```
 
-## Write
 ### Send key events
 ```
 # Send F1 key press event
