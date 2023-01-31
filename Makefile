@@ -7,7 +7,7 @@ RELEASE    := ievctl
 all: cross-build
 
 get: $(SRC)
-	@cd $(SRC_DIR); go get -d -v ./...
+	@cd $(SRC_DIR); go mod download
 
 release: get
 	@go get github.com/pwaller/goupx
