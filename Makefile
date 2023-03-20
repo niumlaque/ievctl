@@ -6,25 +6,16 @@ RELEASE    := ievctl
 .PHONY: all
 all: cross-build
 
-get: $(SRC)
-	@cd $(SRC_DIR); go mod download
+build:
+	@go build -o $(RELEASE) $(SRC)
 
-release: get
-	@go get github.com/pwaller/goupx
-	@cd $(SRC_DIR); go build -ldflags "-s -w" -v -o $(MKFILE_DIR)/$(RELEASE) .
-	@${GOBIN}/goupx $(RELEASE)
-
-cross-build: get
-	@go get github.com/mitchellh/gox
-	@cd $(SRC_DIR); $(GOBIN)/gox -osarch "linux/amd64 linux/386 linux/arm" -output="$(MKFILE_DIR)/dist/$(RELEASE)_{{.OS}}_{{.Arch}}"
+cross-build:
+	@go install github.com/mitchellh/gox@latest
+	@cd $(SRC_DIR); gox -osarch "linux/amd64 linux/386 linux/arm" -output="$(MKFILE_DIR)/dist/$(RELEASE)_{{.OS}}_{{.Arch}}"
 
 clean:
 	@rm -f $(MKFILE_DIR)/$(RELEASE)
 	@rm -fr $(MKFILE_DIR)/dist
-
-check:
-	@go get github.com/golang/lint/golint
-	@cd $(SRC_DIR); ${GOBIN}/golint ./...
 
 format:
 	@cd $(SRC_DIR); go fmt ./...
